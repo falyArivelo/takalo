@@ -14,7 +14,7 @@
             <div class="card-header"> Insertion </div>
             
             <div class="card-body">
-                <form action="<?php echo base_url() ; ?>Authentification/data_insert" method="post">
+                <form action="<?php echo base_url() ; ?>Authentification/insertMembre" method="post">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">

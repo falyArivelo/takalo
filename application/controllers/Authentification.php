@@ -51,12 +51,12 @@ class Authentification extends CI_Controller
 
     // insertion
 
-    public function insertion()
+    public function inscription()
     {
         $this->load->view('pages/inscription');
     }
 
-    public function data_insert()
+    public function insertMembre()
     {
         $this->load->model('Authentification_model');
 
@@ -64,7 +64,7 @@ class Authentification extends CI_Controller
         $pass = $this->input->post('password');
         $data = array('email' => $name, 'motDePasse' => $pass, 'isAdmin' => 0);
 
-        $message = $this->Authentification_model->save($data);
+        $message = $this->Authentification_model->inscrire($data);
         echo $message;
     }
 }

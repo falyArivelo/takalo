@@ -9,4 +9,6 @@
     <input type="submit" value="se connecter">
 </form>
 
+<a href="<?php echo base_url('Authentification/inscription') ?>">inscription</a>
+
 

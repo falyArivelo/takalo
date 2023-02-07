@@ -28,8 +28,26 @@ if ( ! defined('BASEPATH')){
         echo $data['email'];
     }
 
-    public function save($data){
+    public function inscrire($data){
         $this->db->insert('Membres',$data);
+         $email = $data['email'];
+        $password = $data['motDePasse'];
+        $session = $this->Authentification_model->valid_login($email, $password);
+        if (count($session) > 0) {
+            $sess_array = array(
+                'idMembre' => $session[0]->idMembre,
+                'email' => $session[0]->email,
+                'isAdmin' => $session[0]->isAdmin
+            );
+
+            $this->session->set_userdata('connected', $sess_array);
+            redirect('Authentification/secure');
+        } else {
+            $this->session->set_flashdata('error', 'something went wrong');
+            redirect('Authentification/login');
+        }
+
+
 
     }
 
