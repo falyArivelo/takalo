@@ -3,17 +3,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Authentification extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function index()
+    {
+        if ($this->session->userdata('connected')) {
+            redirect('Home/objets');
+        } else {
+            $this->load->view('pages/login');
+        }
+    }
 
     public function login()
     {
-        // $this->load->model("Authentification_model");
+        $this->load->model("Authentification_model");
 
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run()  == FALSE) {
             $this->session->set_flashdata('error', validation_errors());
-            redirect('Authentification/login');
+            redirect('Authentification/index');
+
         } else {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
@@ -26,12 +40,20 @@ class Authentification extends CI_Controller
                 );
 
                 $this->session->set_userdata('connected', $sess_array);
+                
+                if ($sess_array['isAdmin'] == 1) {
+                    redirect('Administrateur/objets');
+                }
                 redirect('Authentification/secure');
+                
             } else {
                 $this->session->set_flashdata('error', 'something went wrong');
-                redirect('Authentification/login');
+                redirect('Authentification/index');
+
             }
         }
+        
+
     }
 
 
@@ -46,7 +68,9 @@ class Authentification extends CI_Controller
     public function deconnexion()
     {
         $this->session->sess_destroy();
-        redirect("Authentification/login");
+        redirect('Authentification/index');
+        // redirect(base_url('pages/login'));
+
     }
 
     // insertion

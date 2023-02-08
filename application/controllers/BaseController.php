@@ -7,7 +7,7 @@ class BaseController extends CI_Controller
     {
         parent::__construct();
 
-        if ($this->session->userdata('id')) {
+        if ($this->session->userdata('connected')) {
             $this->load->view('pages/accueil');
         } else {
             $this->load->view('pages/login');
